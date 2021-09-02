@@ -72,6 +72,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_k,      focusstack,           {.i = -1 } },
 	{ MODKEY,                       XK_l,      shiftviewclients,     {.i = +1 } },
 	{ MODKEY,                       XK_m,      setlayout,            {.v = &layouts[2]} },
+	{ MODKEY,                       XK_n,      spawn,                SHCMD("alacritty -e nvim") },
 	{ MODKEY,                       XK_o,      spawn,                SHCMD("alacritty -e htop") },
 	{ MODKEY,                       XK_p,      spawn,                SHCMD("clipmenu && xdotool key shift+Insert") },
 	{ MODKEY,                       XK_r,      spawn,                {.v = dmenucmd } },
