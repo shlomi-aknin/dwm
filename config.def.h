@@ -79,6 +79,7 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
   { MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
   { MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("clipmenu") },
+  { MODKEY|ShiftMask,             XK_r,      quit,           {1} },
   { MODKEY|ShiftMask,             XK_q,      quit,           {0} },
 
 	TAGKEYS(                        XK_1,                      0)
