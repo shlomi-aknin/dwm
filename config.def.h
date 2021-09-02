@@ -39,6 +39,7 @@ static const Layout layouts[] = {
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+	{ "TTT",      bstack },
 };
 
 /* key definitions */
@@ -75,6 +76,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_r,      spawn,                {.v = dmenucmd } },
 	{ MODKEY,                       XK_t,      setlayout,            {.v = &layouts[0]} },
 	{ MODKEY,                       XK_u,      shiftview,            {.i = -1 } },
+	{ MODKEY,                       XK_v,      setlayout,            {.v = &layouts[3]} },
 	{ MODKEY,                       XK_x,      killclient,           {0} },
 	{ MODKEY,                       XK_z,      spawn,                SHCMD("alacritty -e vifm") },
 	{ MODKEY,                       XK_space,  view,                 {.ui = ~0 } },
