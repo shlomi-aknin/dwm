@@ -59,40 +59,42 @@ static const char *termcmd[]  = { "alacritty", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
-	{ MODKEY,                       XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY,                       XK_b,      spawn,          SHCMD("google-chrome-stable --enable-features=WebUIDarkMode --force-dark-mode --force-device-scale-factor=1.2") },
-	{ MODKEY,                       XK_c,      spawn,          SHCMD("alacritty -t 'Clock' --class 'ttyclock' -e /usr/local/bin/clock") },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
-	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
-	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_o,      spawn,          SHCMD("alacritty -e htop") },
-	{ MODKEY,                       XK_p,      spawn,          SHCMD("clipmenu && xdotool key shift+Insert") },
-	{ MODKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
-  { MODKEY,                       XK_space,  spawn,          SHCMD("dswitcher") },
-	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_x,      killclient,     {0} },
-	{ MODKEY,                       XK_z,      spawn,          SHCMD("alacritty -e vifm") },
+	{ MODKEY,                       XK_0,      view,                 {.ui = ~0 } },
+	{ MODKEY,                       XK_Return, spawn,                {.v = termcmd } },
+	{ MODKEY,                       XK_Tab,    view,                 {0} },
+	{ MODKEY,                       XK_b,      spawn,                SHCMD("google-chrome-stable --enable-features=WebUIDarkMode --force-dark-mode --force-device-scale-factor=1.2") },
+	{ MODKEY,                       XK_c,      spawn,                SHCMD("alacritty -t 'Clock' --class 'ttyclock' -e /usr/local/bin/clock") },
+	{ MODKEY,                       XK_f,      setlayout,            {.v = &layouts[1]} },
+	{ MODKEY,                       XK_h,      shiftviewclients,     {.i = -1 } },
+	{ MODKEY,                       XK_j,      focusstack,           {.i = +1 } },
+	{ MODKEY,                       XK_k,      focusstack,           {.i = -1 } },
+	{ MODKEY,                       XK_l,      shiftviewclients,     {.i = +1 } },
+	{ MODKEY,                       XK_m,      setlayout,            {.v = &layouts[2]} },
+	{ MODKEY,                       XK_o,      spawn,                SHCMD("alacritty -e htop") },
+	{ MODKEY,                       XK_p,      spawn,                SHCMD("clipmenu && xdotool key shift+Insert") },
+	{ MODKEY,                       XK_r,      spawn,                {.v = dmenucmd } },
+	{ MODKEY,                       XK_t,      setlayout,            {.v = &layouts[0]} },
+	{ MODKEY,                       XK_x,      killclient,           {0} },
+	{ MODKEY,                       XK_z,      spawn,                SHCMD("alacritty -e vifm") },
+  { MODKEY,                       XK_space,  spawn,                SHCMD("dswitcher") },
 
-	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-  { MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
-  { MODKEY|ShiftMask,             XK_j,      pushdown,       {0} },
-  { MODKEY|ShiftMask,             XK_k,      pushup,         {0} },
-  { MODKEY|ShiftMask,             XK_p,      spawn,          SHCMD("clipmenu") },
-  { MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-  { MODKEY|ShiftMask,             XK_r,      quit,           {1} },
+	{ MODKEY|ShiftMask,             XK_0,      tag,                  {.ui = ~0 } },
+  { MODKEY|ShiftMask,             XK_Return, zoom,                 {0} },
+  { MODKEY|ShiftMask,             XK_j,      pushdown,             {0} },
+  { MODKEY|ShiftMask,             XK_k,      pushup,               {0} },
+  { MODKEY|ShiftMask,             XK_p,      spawn,                SHCMD("clipmenu") },
+  { MODKEY|ShiftMask,             XK_q,      quit,                 {0} },
+  { MODKEY|ShiftMask,             XK_r,      quit,                 {1} },
 
-	TAGKEYS(                        XK_1,                      0)
-	TAGKEYS(                        XK_2,                      1)
-	TAGKEYS(                        XK_3,                      2)
-	TAGKEYS(                        XK_4,                      3)
-	TAGKEYS(                        XK_5,                      4)
-	TAGKEYS(                        XK_6,                      5)
-	TAGKEYS(                        XK_7,                      6)
-	TAGKEYS(                        XK_8,                      7)
-	TAGKEYS(                        XK_9,                      8)
+	TAGKEYS(                        XK_1,                            0)
+	TAGKEYS(                        XK_2,                            1)
+	TAGKEYS(                        XK_3,                            2)
+	TAGKEYS(                        XK_4,                            3)
+	TAGKEYS(                        XK_5,                            4)
+	TAGKEYS(                        XK_6,                            5)
+	TAGKEYS(                        XK_7,                            6)
+	TAGKEYS(                        XK_8,                            7)
+	TAGKEYS(                        XK_9,                            8)
 
   /* { MODKEY,                       XK_b,      togglebar,      {0} }, */
   /* { MODKEY,                       XK_d,      incnmaster,     {.i = -1 } }, */
