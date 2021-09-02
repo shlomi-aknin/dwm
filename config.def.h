@@ -81,6 +81,8 @@ static Key keys[] = {
   { MODKEY,                       XK_space,  spawn,                SHCMD("dswitcher") },
 
 	{ MODKEY|ShiftMask,             XK_0,      tag,                  {.ui = ~0 } },
+	{ MODKEY|ShiftMask,             XK_F1,     spawn,                SHCMD("sudo reboot") },
+	{ MODKEY|ShiftMask,             XK_F2,     spawn,                SHCMD("sudo poweroff") },
   { MODKEY|ShiftMask,             XK_Return, zoom,                 {0} },
   { MODKEY|ShiftMask,             XK_j,      pushdown,             {0} },
   { MODKEY|ShiftMask,             XK_k,      pushup,               {0} },
