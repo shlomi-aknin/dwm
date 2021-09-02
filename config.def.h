@@ -59,7 +59,6 @@ static const char *termcmd[]  = { "alacritty", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
-	{ MODKEY,                       XK_0,      view,                 {.ui = ~0 } },
 	{ MODKEY,                       XK_Return, spawn,                {.v = termcmd } },
 	{ MODKEY,                       XK_Tab,    view,                 {0} },
 	{ MODKEY,                       XK_b,      spawn,                SHCMD("google-chrome-stable --enable-features=WebUIDarkMode --force-dark-mode --force-device-scale-factor=1.2") },
@@ -78,12 +77,12 @@ static Key keys[] = {
 	{ MODKEY,                       XK_u,      shiftview,            {.i = -1 } },
 	{ MODKEY,                       XK_x,      killclient,           {0} },
 	{ MODKEY,                       XK_z,      spawn,                SHCMD("alacritty -e vifm") },
-  { MODKEY,                       XK_space,  spawn,                SHCMD("dswitcher") },
+	{ MODKEY,                       XK_space,  view,                 {.ui = ~0 } },
 
 	{ MODKEY|ShiftMask,             XK_0,      tag,                  {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_F1,     spawn,                SHCMD("sudo reboot") },
 	{ MODKEY|ShiftMask,             XK_F2,     spawn,                SHCMD("sudo poweroff") },
-  { MODKEY|ShiftMask,             XK_Return, zoom,                 {0} },
+  { MODKEY|ShiftMask,             XK_Return, winview,              {0} },
   { MODKEY|ShiftMask,             XK_j,      pushdown,             {0} },
   { MODKEY|ShiftMask,             XK_k,      pushup,               {0} },
   { MODKEY|ShiftMask,             XK_p,      spawn,                SHCMD("clipmenu") },
