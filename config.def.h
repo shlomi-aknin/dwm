@@ -1,6 +1,6 @@
 /* appearance */
 static const unsigned int borderpx  = 5;        /* border pixel of windows */
-static const unsigned int gappx     = 8;        /* gaps between windows */
+static const unsigned int gappx     = 10;        /* gaps between windows */
 static const unsigned int snap      = 0;       /* snap pixel */
 static const int showbar            = 0;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -64,6 +64,7 @@ static Key keys[] = {
 	/* modifier                     key                function              argument */
 	{ MODKEY,                       XK_Return,         spawn,                {.v = termcmd } },
 	{ MODKEY,                       XK_Tab,            view,                 {0} },
+	{ MODKEY,                       XK_a,              spawn,                SHCMD("alacritty -e ssh -i ~/Documents/carmeter_aws_keypair_11062017.pem ubuntu@car-meter.com") },
 	{ MODKEY,                       XK_b,              spawn,                SHCMD("google-chrome-stable --enable-features=WebUIDarkMode --force-dark-mode --force-device-scale-factor=1.2") },
 	{ MODKEY,                       XK_c,              spawn,                SHCMD("alacritty -t 'Clock' --class 'ttyclock' -e /usr/local/bin/clock") },
 	{ MODKEY,                       XK_f,              setlayout,            {.v = &layouts[1]} },
@@ -82,7 +83,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_u,              shiftview,            {.i = -1 } },
 	{ MODKEY,                       XK_v,              setlayout,            {.v = &layouts[3]} },
 	{ MODKEY,                       XK_x,              killclient,           {0} },
-	{ MODKEY,                       XK_z,              spawn,                SHCMD("alacritty -e vifm") },
+	{ MODKEY,                       XK_z,              spawn,                SHCMD("alacritty -t \"vifm\" -e vifmrun") },
 	{ MODKEY,                       XK_space,          view,                 {.ui = ~0 } },
 
 	{ MODKEY|ShiftMask,             XK_0,              tag,                  {.ui = ~0 } },
