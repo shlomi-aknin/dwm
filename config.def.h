@@ -41,6 +41,7 @@ static const Layout layouts[] = {
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 	{ "TTT",      bstack },
+	{ "+++",      magicgrid },
 };
 
 /* key definitions */
@@ -66,6 +67,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_b,              spawn,                SHCMD("google-chrome-stable --enable-features=WebUIDarkMode --force-dark-mode --force-device-scale-factor=1.2") },
 	{ MODKEY,                       XK_c,              spawn,                SHCMD("alacritty -t 'Clock' --class 'ttyclock' -e /usr/local/bin/clock") },
 	{ MODKEY,                       XK_f,              setlayout,            {.v = &layouts[1]} },
+	{ MODKEY,                       XK_g,              setlayout,            {.v = &layouts[4]} },
 	{ MODKEY,                       XK_h,              shiftviewclients,     {.i = -1 } },
 	{ MODKEY,                       XK_i,              shiftview,            {.i = +1 } },
 	{ MODKEY,                       XK_j,              focusstack,           {.i = +1 } },
