@@ -148,6 +148,7 @@ typedef struct {
 	int floatborderpx;
 } Rule;
 
+const char *sessionfile = "/tmp/dwm.sess";
 /* function declarations */
 static void applyrules(Client *c);
 static int applysizehints(Client *c, int *x, int *y, int *w, int *h, int interact);
@@ -207,6 +208,7 @@ static void resizeclient(Client *c, int x, int y, int w, int h);
 static void resizemouse(const Arg *arg);
 static void restack(Monitor *m);
 static void run(void);
+static void savesession(void);
 static void scan(void);
 static int sendevent(Client *c, Atom proto);
 static void sendmon(Client *c, Monitor *m);
@@ -1635,6 +1637,22 @@ run(void)
 			handler[ev.type](&ev); /* call handler */
 }
 
+void savesession(void)
+{
+    FILE *fp;
+
+    fp = fopen(sessionfile, "w+");
+
+    Client *c;
+    for (c = selmon->clients; c != NULL; c = c->next) {
+    /* for (c = clients; c != NULL; c = c->next) { */
+
+        fprintf(fp, "client name: %s ===> tag: %d\n", c->name, c->tags);
+        /* fputs("This is testing for fputs...\n", fp); */
+    }
+    fclose(fp);
+}
+
 void
 scan(void)
 {
@@ -2567,7 +2585,10 @@ main(int argc, char *argv[])
 #endif /* __OpenBSD__ */
 	scan();
 	run();
-	if(restart) execvp(argv[0], argv);
+    if(restart) {
+        savesession();
+        execvp(argv[0], argv);
+    }
 	cleanup();
 	XCloseDisplay(dpy);
 	return EXIT_SUCCESS;
