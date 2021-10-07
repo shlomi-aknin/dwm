@@ -2004,7 +2004,7 @@ togglefloating(const Arg *arg)
 void
 togglemonocle(void)
 {
-  setlayout(&((Arg)  {.v = &layouts[selmon->lt[selmon->sellt]->symbol == "[M]" ? 0 : 2] }));
+  setlayout(&((Arg)  {.v = &layouts[selmon->lt[selmon->sellt]->symbol == layouts[0].symbol ? 2 : 0] }));
 }
 
 void
