@@ -2357,10 +2357,9 @@ view(const Arg *arg)
 		selmon->tagset[selmon->seltags] = arg->ui & TAGMASK;
 		selmon->pertag->prevtag = selmon->pertag->curtag;
 
-        if (arg->ui == ~0) {
-            selmon->pertag->curtag = 0;
-        }
-		else {
+    if (arg->ui == ~0) {
+      selmon->pertag->curtag = 0;
+    } else {
 			for (i = 0; !(arg->ui & 1 << i); i++) ;
 			selmon->pertag->curtag = i + 1;
 		}
@@ -2381,10 +2380,10 @@ view(const Arg *arg)
 
 	focus(NULL);
 	arrange(selmon);
-    if (selmon->pertag->curtag == 0) {
-        Arg a = {.v = &layouts[2]};
-        setlayout(&a);
-    }
+  if (selmon->pertag->curtag == 0) {
+      Arg a = {.v = &layouts[2]};
+      setlayout(&a);
+  }
 }
 
 Client *
