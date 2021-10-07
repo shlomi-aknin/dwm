@@ -229,6 +229,7 @@ static void tagtoright(const Arg *arg);
 static void tile(Monitor *);
 static void togglebar(const Arg *arg);
 static void togglefloating(const Arg *arg);
+static void togglemonocle(void);
 static void toggletag(const Arg *arg);
 static void toggleview(const Arg *arg);
 static void unfocus(Client *c, int setfocus);
@@ -1998,6 +1999,12 @@ togglefloating(const Arg *arg)
 		resize(selmon->sel, selmon->sel->x, selmon->sel->y,
 			selmon->sel->w, selmon->sel->h, 0);
 	arrange(selmon);
+}
+
+void
+togglemonocle(void)
+{
+  setlayout(&((Arg)  {.v = &layouts[selmon->lt[selmon->sellt]->symbol == "[M]" ? 0 : 2] }));
 }
 
 void
