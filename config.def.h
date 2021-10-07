@@ -10,7 +10,7 @@ static const char col1[]       = "#000000";
 static const char col2[]       = "#000000";
 static const char col3[]       = "#ffffff";
 static const char col4[]       = "#03A9F4";
-static const char col5[]        = "#ffff00";
+static const char col5[]       = "#ffff00";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col3, col1, col2 },
@@ -28,7 +28,7 @@ static const Rule rules[] = {
 	/* class        instance          title          tags mask     isfloating   monitor    float x,y,w,h         floatborderpx*/
 	{ "Gimp",       NULL,             NULL,          0,            1,           -1,        50,50,500,500,        5 },
 	{ "Firefox",    NULL,             NULL,          1 << 8,       0,           -1,        50,50,500,500,        5 },
-    { "Alacritty",  "ttyclock",       "Clock",       0,            1,           -1,        0,0,1376,625,         -1 },
+  { "Alacritty",  "ttyclock",       "Clock",       0,            1,           -1,        0,0,1376,625,         -1 },
 };
 
 /* layout(s) */
@@ -42,16 +42,18 @@ static const Layout layouts[] = {
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 	{ "TTT",      bstack },
-	{ "+++",      magicgrid },
 };
 
 /* key definitions */
-#define MODKEY Mod4Mask
+#define SUPER Mod4Mask
+#define SHIFT ShiftMask
+#define CONTROL ControlMask
+
 #define TAGKEYS(KEY,TAG) \
-	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
-	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
+	{ SUPER,                   KEY,      view,           {.ui = 1 << TAG} }, \
+	{ SUPER|CONTROL,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
+	{ SUPER|SHIFT,             KEY,      tag,            {.ui = 1 << TAG} }, \
+	{ SUPER|CONTROL|SHIFT,     KEY,      toggletag,      {.ui = 1 << TAG} },
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
@@ -63,77 +65,57 @@ static const char *termcmd[]  = { "alacritty", NULL };
 
 static Key keys[] = {
 	/* modifier                     key                function              argument */
-	{ MODKEY,                       XK_Delete,         killunsel,            {.i = 1} },
-	{ MODKEY,                       XK_Return,         spawn,                {.v = termcmd } },
-	{ MODKEY,                       XK_Tab,            view,                 {0} },
-	{ MODKEY,                       XK_a,              spawn,                SHCMD("alacritty -e ssh -i ~/Documents/carmeter_aws_keypair_11062017.pem ubuntu@car-meter.com") },
-	{ MODKEY,                       XK_b,              spawn,                SHCMD("google-chrome-stable --enable-features=WebUIDarkMode --force-dark-mode --force-device-scale-factor=1.2") },
-	{ MODKEY,                       XK_c,              spawn,                SHCMD("alacritty -t 'Clock' --class 'ttyclock' -e /usr/local/bin/clock") },
-	{ MODKEY,                       XK_f,              setlayout,            {.v = &layouts[1]} },
-	{ MODKEY,                       XK_g,              setlayout,            {.v = &layouts[4]} },
-	{ MODKEY,                       XK_h,              shiftviewclients,     {.i = -1 } },
-	{ MODKEY,                       XK_i,              shiftview,            {.i = +1 } },
-	{ MODKEY,                       XK_j,              focusstack,           {.i = +1 } },
-	{ MODKEY,                       XK_k,              focusstack,           {.i = -1 } },
-	{ MODKEY,                       XK_l,              shiftviewclients,     {.i = +1 } },
-	{ MODKEY,                       XK_m,              setlayout,            {.v = &layouts[2]} },
-	{ MODKEY,                       XK_n,              spawn,                SHCMD("alacritty -e nvim") },
-	{ MODKEY,                       XK_o,              spawn,                SHCMD("alacritty -e htop") },
-	{ MODKEY,                       XK_p,              spawn,                SHCMD("clipmenu && xdotool key shift+Insert") },
-	{ MODKEY,                       XK_r,              spawn,                {.v = dmenucmd } },
-	{ MODKEY,                       XK_t,              setlayout,            {.v = &layouts[0]} },
-	{ MODKEY,                       XK_u,              shiftview,            {.i = -1 } },
-	{ MODKEY,                       XK_v,              setlayout,            {.v = &layouts[3]} },
-	{ MODKEY,                       XK_x,              killclient,           {0} },
-	{ MODKEY,                       XK_z,              spawn,                SHCMD("alacritty -t \"vifm\" -e vifmrun") },
-	{ MODKEY,                       XK_space,          view,                 {.ui = ~0 } },
-
-	{ MODKEY|ShiftMask,             XK_0,              tag,                  {.ui = ~0 } },
-	{ MODKEY|ShiftMask,             XK_F1,             spawn,                SHCMD("sudo reboot") },
-	{ MODKEY|ShiftMask,             XK_F2,             spawn,                SHCMD("sudo poweroff") },
-  { MODKEY|ShiftMask,             XK_BackSpace,      spawn,                SHCMD("slimlock") },
-  { MODKEY|ShiftMask,             XK_Return,         winview,              {0} },
-	{ MODKEY|ShiftMask,             XK_h,              tagtoleft,            {.i = -1 } },
-  { MODKEY|ShiftMask,             XK_j,              pushdown,             {0} },
-  { MODKEY|ShiftMask,             XK_k,              pushup,               {0} },
-  { MODKEY|ShiftMask,             XK_l,              tagtoright,           {.i = +1 } },
-  { MODKEY|ShiftMask,             XK_p,              spawn,                SHCMD("clipmenu") },
-  { MODKEY|ShiftMask,             XK_q,              quit,                 {0} },
-  { MODKEY|ShiftMask,             XK_r,              quit,                 {1} },
-	{ MODKEY|ShiftMask,             XK_x,              killunsel,            {0} },
-
-	TAGKEYS(                        XK_1,                            0)
-	TAGKEYS(                        XK_2,                            1)
-	TAGKEYS(                        XK_3,                            2)
-	TAGKEYS(                        XK_4,                            3)
-	TAGKEYS(                        XK_5,                            4)
-	TAGKEYS(                        XK_6,                            5)
-	TAGKEYS(                        XK_7,                            6)
-	TAGKEYS(                        XK_8,                            7)
-	TAGKEYS(                        XK_9,                            8)
-
-  /* { MODKEY,                       XK_b,      togglebar,      {0} }, */
-  /* { MODKEY,                       XK_d,      incnmaster,     {.i = -1 } }, */
-  /* { MODKEY,                       XK_h,      setmfact,       {.f = -0.05} }, */
-  /* { MODKEY,                       XK_i,      incnmaster,     {.i = +1 } }, */
-  /* { MODKEY,                       XK_l,      setmfact,       {.f = +0.05} }, */
-  /* { MODKEY|ShiftMask,             XK_space,  togglefloating, {0} }, */
+	{ SUPER,                       XK_Delete,         killunsel,            {.i = 1} },
+	{ SUPER,                       XK_Return,         spawn,                {.v = termcmd } },
+	{ SUPER,                       XK_Tab,            view,                 {0} },
+	{ SUPER,                       XK_a,              spawn,                SHCMD("alacritty -e ssh -i ~/Documents/carmeter_aws_keypair_11062017.pem ubuntu@car-meter.com") },
+	{ SUPER,                       XK_b,              spawn,                SHCMD("google-chrome-stable --enable-features=WebUIDarkMode --force-dark-mode --force-device-scale-factor=1.2") },
+	{ SUPER,                       XK_c,              spawn,                SHCMD("alacritty -t 'Clock' --class 'ttyclock' -e /usr/local/bin/clock") },
+	{ SUPER,                       XK_f,              setlayout,            {.v = &layouts[1]} },
+	{ SUPER,                       XK_h,              shiftviewclients,     {.i = -1 } },
+	{ SUPER,                       XK_i,              shiftview,            {.i = +1 } },
+	{ SUPER,                       XK_j,              focusstack,           {.i = +1 } },
+	{ SUPER,                       XK_k,              focusstack,           {.i = -1 } },
+	{ SUPER,                       XK_l,              shiftviewclients,     {.i = +1 } },
+	{ SUPER,                       XK_m,              setlayout,            {.v = &layouts[2]} },
+	{ SUPER,                       XK_n,              spawn,                SHCMD("alacritty -e nvim") },
+	{ SUPER,                       XK_o,              spawn,                SHCMD("alacritty -e htop") },
+	{ SUPER,                       XK_p,              spawn,                SHCMD("clipmenu && xdotool key shift+Insert") },
+	{ SUPER,                       XK_r,              spawn,                {.v = dmenucmd } },
+	{ SUPER,                       XK_space,          view,                 {.ui = ~0 } },
+	{ SUPER,                       XK_t,              setlayout,            {.v = &layouts[0]} },
+	{ SUPER,                       XK_u,              shiftview,            {.i = -1 } },
+	{ SUPER,                       XK_v,              setlayout,            {.v = &layouts[3]} },
+	{ SUPER,                       XK_x,              killclient,           {0} },
+	{ SUPER,                       XK_z,              spawn,                SHCMD("alacritty -t \"vifm\" -e vifmrun") },
+	{ SUPER|SHIFT,                 XK_0,              tag,                  {.ui = ~0 } },
+	{ SUPER|SHIFT,                 XK_F1,             spawn,                SHCMD("sudo reboot") },
+	{ SUPER|SHIFT,                 XK_F2,             spawn,                SHCMD("sudo poweroff") },
+	{ SUPER|SHIFT,                 XK_h,              tagtoleft,            {.i = -1 } },
+	{ SUPER|SHIFT,                 XK_x,              killunsel,            {0} },
+  { SUPER|SHIFT,                 XK_BackSpace,      spawn,                SHCMD("slimlock") },
+  { SUPER|SHIFT,                 XK_Return,         winview,              {0} },
+  { SUPER|SHIFT,                 XK_j,              pushdown,             {0} },
+  { SUPER|SHIFT,                 XK_k,              pushup,               {0} },
+  { SUPER|SHIFT,                 XK_l,              tagtoright,           {.i = +1 } },
+  { SUPER|SHIFT,                 XK_p,              spawn,                SHCMD("clipmenu") },
+  { SUPER|SHIFT,                 XK_q,              quit,                 {0} },
+  { SUPER|SHIFT,                 XK_r,              quit,                 {1} },
+	TAGKEYS(                       XK_1,              0)
+	TAGKEYS(                       XK_2,              1)
+	TAGKEYS(                       XK_3,              2)
+	TAGKEYS(                       XK_4,              3)
+	TAGKEYS(                       XK_5,              4)
+	TAGKEYS(                       XK_6,              5)
+	TAGKEYS(                       XK_7,              6)
+	TAGKEYS(                       XK_8,              7)
+	TAGKEYS(                       XK_9,              8)
 };
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
 static Button buttons[] = {
 	/* click                event mask      button          function        argument */
-	/* { ClkLtSymbol,          0,              Button1,        setlayout,      {0} }, */
-	/* { ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} }, */
-	/* { ClkWinTitle,          0,              Button2,        zoom,           {0} }, */
-	/* { ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } }, */
-	/* { ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} }, */
-	/* { ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} }, */
-	/* { ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} }, */
 	{ ClkTagBar,            0,              Button1,        view,           {0} },
-	/* { ClkTagBar,            0,              Button3,        toggleview,     {0} }, */
-	/* { ClkTagBar,            MODKEY,         Button1,        tag,            {0} }, */
-	/* { ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} }, */
 };
 

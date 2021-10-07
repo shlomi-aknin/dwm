@@ -187,7 +187,6 @@ static void incnmaster(const Arg *arg);
 static void keypress(XEvent *e);
 static void killclient(const Arg *arg);
 static void killunsel(const Arg *arg);
-static void magicgrid(Monitor *m);
 static void manage(Window w, XWindowAttributes *wa);
 static void mappingnotify(XEvent *e);
 static void maprequest(XEvent *e);
@@ -1144,47 +1143,6 @@ killunsel(const Arg *arg)
 			}
 		}
 	}
-}
-
-void
-magicgrid(Monitor *m) {
-  Client *c;
-  int total = 0;
-
-	for(c = nexttiled(m->clients); c; c = nexttiled(c->next)) {
-    total++;
-  }
-
-  int rows;
-  for (rows = 1; rows < total; rows++) {
-    int rowssq = rows * rows;
-    int nextsq = (rows + 1) * (rows + 1);
-
-    if (total >= rowssq && total < nextsq) {
-      break;
-    }
-  }
-
-  int basecols = total / rows;
-  int extendedrows = total - (rows * basecols);
-
-  c = nexttiled(m->clients);
-
-  for (int row = 0; row < rows; row++) {
-    int cols = (row >= rows - extendedrows) ? basecols + 1: basecols;
-
-    for (int col = 0; col < cols; col++) {
-      int w = (m->ww - gappx) / cols;
-      int h = (m->wh - gappx) / rows;
-      int x = m->wx + col * w + gappx;
-      int y = m->wy + row * h + gappx;
-
-      int buff = (2 * c->bw) + gappx;
-
-      resize(c, x, y, w - buff, h - buff, 0);
-      c = nexttiled(c->next);
-    }
-  }
 }
 
 void
