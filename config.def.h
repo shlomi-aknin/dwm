@@ -77,7 +77,6 @@ static Key keys[] = {
 	{ SUPER,                       XK_j,              focusstack,           {.i = +1 } },
 	{ SUPER,                       XK_k,              focusstack,           {.i = -1 } },
 	{ SUPER,                       XK_l,              shiftviewclients,     {.i = +1 } },
-	/* { SUPER,                       XK_m,              setlayout,            {.v = &layouts[2]} }, */
 	{ SUPER,                       XK_m,              togglemonocle,        {NULL} },
 	{ SUPER,                       XK_n,              spawn,                SHCMD("alacritty -e nvim") },
 	{ SUPER,                       XK_o,              spawn,                SHCMD("alacritty -e htop") },

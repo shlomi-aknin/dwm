@@ -2004,6 +2004,7 @@ togglefloating(const Arg *arg)
 void
 togglemonocle(void)
 {
+  if (selmon->pertag->curtag == 0) return;
   setlayout(&((Arg)  {.v = &layouts[selmon->lt[selmon->sellt]->symbol == layouts[0].symbol ? 2 : 0] }));
 }
 
@@ -2381,7 +2382,7 @@ view(const Arg *arg)
 	focus(NULL);
 	arrange(selmon);
     if (selmon->pertag->curtag == 0) {
-        Arg a = {.v = &layouts[4]};
+        Arg a = {.v = &layouts[2]};
         setlayout(&a);
     }
 }
