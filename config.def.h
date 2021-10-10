@@ -98,6 +98,7 @@ static Key keys[] = {
   { SUPER|SHIFT,                 XK_j,              pushdown,             {0} },
   { SUPER|SHIFT,                 XK_k,              pushup,               {0} },
   { SUPER|SHIFT,                 XK_l,              tagtoright,           {.i = +1 } },
+  { SUPER|SHIFT,                 XK_n,              spawn,                SHCMD("alacritty -e neomutt") },
   { SUPER|SHIFT,                 XK_p,              spawn,                SHCMD("clipmenu") },
   { SUPER|SHIFT,                 XK_q,              quit,                 {0} },
   { SUPER|SHIFT,                 XK_r,              quit,                 {1} },
