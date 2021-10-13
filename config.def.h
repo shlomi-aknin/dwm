@@ -31,6 +31,7 @@ static const Rule rules[] = {
   { "Alacritty",  "ttyclock",        "Clock",       	0,            1,           -1,        0,0,1376,625,         -1 },
   { "Alacritty",  "projectselectorcode", "Projects",	0,            1,           -1,        0,0,800,625,         -1 },
   { "Alacritty",  "projectselectornvim", "Projects",	0,            0,           -1,        0,0,800,625,         -1 },
+  { "Alacritty",  "updatelastselected", "Projects", 	0,            1,           -1,        0,0,800,625,         -1 },
 };
 
 /* layout(s) */
@@ -106,7 +107,7 @@ static Key keys[] = {
   { SUPER|SHIFT,                 XK_p,              spawn,                SHCMD("clipmenu") },
   { SUPER|SHIFT,                 XK_q,              quit,                 {0} },
   { SUPER|SHIFT,                 XK_r,              quit,                 {1} },
-	{ SUPER|SHIFT,                 XK_w,              spawn,                SHCMD("alacritty -t 'Projects' --class 'projectselectornvim' -e /usr/local/bin/projectselectornvim") },
+	{ SUPER|SHIFT,                 XK_w,              spawn,                SHCMD("alacritty -t 'Projects' --class 'updatelastselected' -e /usr/local/bin/updatelastproject") },
 	{ SUPER|SHIFT,                 XK_z,              spawn,                SHCMD("alacritty -e vifm +only $(cat /tmp/lastdir)") },
 	TAGKEYS(                       XK_1,              0)
 	TAGKEYS(                       XK_2,              1)
