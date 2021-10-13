@@ -107,6 +107,7 @@ static Key keys[] = {
   { SUPER|SHIFT,                 XK_q,              quit,                 {0} },
   { SUPER|SHIFT,                 XK_r,              quit,                 {1} },
 	{ SUPER|SHIFT,                 XK_w,              spawn,                SHCMD("alacritty -t 'Projects' --class 'projectselectornvim' -e /usr/local/bin/projectselectornvim") },
+	{ SUPER|SHIFT,                 XK_z,              spawn,                SHCMD("alacritty -e vifm +only $(cat /tmp/lastdir)") },
 	TAGKEYS(                       XK_1,              0)
 	TAGKEYS(                       XK_2,              1)
 	TAGKEYS(                       XK_3,              2)
