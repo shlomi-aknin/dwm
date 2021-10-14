@@ -29,9 +29,6 @@ static const Rule rules[] = {
   { "Gimp",       NULL,              			NULL,          	0,            1,           -1,        50,50,500,500,        5 },
   { "Firefox",    NULL,              			NULL,          	1 << 8,       0,           -1,        50,50,500,500,        5 },
   { "Alacritty",  "ttyclock",       			"Clock",       	0,            1,           -1,        0,0,1376,625,         -1 },
-  { "Alacritty",  "projectselectorcode", 	"Projects",			0,            1,           -1,        0,0,800,625,         -1 },
-  { "Alacritty",  "projectselectornvim", 	"Projects",			0,            0,           -1,        0,0,800,625,         -1 },
-  { "Alacritty",  "updatelastselected", 	"Projects", 		0,            1,           -1,        0,0,800,625,         -1 },
 };
 
 /* layout(s) */
@@ -89,7 +86,7 @@ static Key keys[] = {
   { SUPER,                       XK_t,              setlayout,            {.v = &layouts[0]} },
   { SUPER,                       XK_u,              shiftview,            {.i = -1 } },
   { SUPER,                       XK_v,              setlayout,            {.v = &layouts[3]} },
-  { SUPER,                       XK_w,              spawn,                SHCMD("alacritty -t 'Projects' --class 'projectselectorcode' -e /usr/local/bin/projectselectorcode") },
+  { SUPER,                       XK_w,              spawn,                SHCMD("projectselectorcode") },
 
   { SUPER,                       XK_x,              killclient,           {0} },
   { SUPER,                       XK_z,              spawn,                SHCMD("alacritty -t \"vifm\" -e vifmrun") },
@@ -108,7 +105,7 @@ static Key keys[] = {
   { SUPER|SHIFT,                 XK_o,              spawn,                SHCMD("projectselectornvim") },
   { SUPER|SHIFT,                 XK_q,              quit,                 {0} },
   { SUPER|SHIFT,                 XK_r,              quit,                 {1} },
-  { SUPER|SHIFT,                 XK_w,              spawn,                SHCMD("alacritty -t 'Projects' --class 'updatelastselected' -e /usr/local/bin/updatelastproject") },
+  { SUPER|SHIFT,                 XK_w,              spawn,                SHCMD("updatelastproject") },
   { SUPER|SHIFT,                 XK_z,              spawn,                SHCMD("alacritty -e vifm +only $(cat /tmp/lastdir)") },
   TAGKEYS(                       XK_1,              0)
   TAGKEYS(                       XK_2,              1)
