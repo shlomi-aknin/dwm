@@ -30,6 +30,7 @@ static const Rule rules[] = {
   { "Alacritty",  "ttyclock",       			"Clock",       	0,            1,           -1,        0,0,1376,625,         -1 },
   { "Alacritty",  "fzfcode",       			"FZFCODE",       	0,            1,           -1,        0,0,1376,625,         -1 },
   { "Alacritty",  "vifmcode",       		"VIFMCODE",       0,            1,           -1,        0,0,1376,625,         -1 },
+  { "Alacritty",  "lazygitcode",       	"LAZYGITCODE",    0,            1,           -1,        0,0,1376,625,         -1 },
 };
 
 /* layout(s) */
