@@ -29,6 +29,7 @@ static const Rule rules[] = {
   { "Firefox",    NULL,              			NULL,          	1 << 8,       0,           -1,        50,50,500,500,        5 },
   { "Alacritty",  "ttyclock",       			"Clock",       	0,            1,           -1,        0,0,1376,625,         -1 },
   { "Alacritty",  "fzfcode",       			"FZFCODE",       	0,            1,           -1,        0,0,1376,625,         -1 },
+  { "Alacritty",  "vifmcode",       		"VIFMCODE",       0,            1,           -1,        0,0,1376,625,         -1 },
 };
 
 /* layout(s) */
