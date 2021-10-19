@@ -85,7 +85,7 @@ static Key keys[] = {
   { SUPER,                       XK_p,              spawn,                SHCMD("clipmenu && xdotool key shift+Insert") },
   { SUPER,                       XK_r,              spawn,                {.v = dmenucmd } },
   { SUPER,                       XK_space,          view,                 {.ui = ~0 } },
-  { SUPER,                       XK_t,              setlayout,            {.v = &layouts[0]} },
+  { SUPER,                       XK_t,              setlayout,            {.v = &layouts[2]} },
   { SUPER,                       XK_u,              shiftview,            {.i = -1 } },
   { SUPER,                       XK_v,              setlayout,            {.v = &layouts[3]} },
   { SUPER,                       XK_w,              spawn,                SHCMD("projectselectorcode") },
