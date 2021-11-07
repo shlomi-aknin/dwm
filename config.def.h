@@ -62,7 +62,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run_i" };
+static const char *dmenucmd[] = { "dmenu_run" };
 static const char *termcmd[]  = { "alacritty", NULL };
 
 static Key keys[] = {
@@ -91,7 +91,7 @@ static Key keys[] = {
   { SUPER,                       XK_w,              spawn,                SHCMD("projectselectorcode") },
 
   { SUPER,                       XK_x,              killclient,           {0} },
-  { SUPER,                       XK_z,              spawn,                SHCMD("alacritty -t \"vifm\" -e vifmrun") },
+  { SUPER,                       XK_z,              spawn,                SHCMD("alacritty -t \"vifm\" -e vifm") },
   { SUPER|SHIFT,                 XK_0,              tag,                  {.ui = ~0 } },
   { SUPER|SHIFT,                 XK_F1,             spawn,                SHCMD("sudo reboot") },
   { SUPER|SHIFT,                 XK_F2,             spawn,                SHCMD("sudo poweroff") },
@@ -120,4 +120,3 @@ static Key keys[] = {
   TAGKEYS(                       XK_8,              7)
   TAGKEYS(                       XK_9,              8)
 };
-
