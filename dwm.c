@@ -2045,19 +2045,19 @@ togglefloating(const Arg *arg)
 void
 togglemonocle(void)
 {
-  Layout monoclelayout = { "[M]",      monocle };
-  Layout defaultlayout = { "[]=",      tile };
+  /* Layout monoclelayout = { "[M]",      monocle }; */
+  /* Layout defaultlayout = { "[]=",      tile }; */
   if (selmon->pertag->curtag == 0) return;
   if (selmon->lt[selmon->sellt]->symbol == layouts[0].symbol) {
     if (!currentlayout) {
-      /* currentlayout = &layouts[2]; */
-      currentlayout = &defaultlayout;
+      currentlayout = &layouts[2];
+      /* currentlayout = &defaultlayout; */
     }
     selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = currentlayout;
   } else {
     currentlayout = selmon->lt[selmon->sellt];
-    /* selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = &layouts[0]; */
-    selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = &monoclelayout;
+    selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = &layouts[0];
+    /* selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = &monoclelayout; */
   }
   arrange(selmon);
 }
