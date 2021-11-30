@@ -257,6 +257,7 @@ static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void zoom(const Arg *arg);
 
 /* variables */
+Layout *currentlayout = NULL;
 static const char broken[] = "broken";
 static char stext[256];
 static int screen;
@@ -1725,10 +1726,12 @@ setfullscreen(Client *c, int fullscreen)
 void
 setlayout(const Arg *arg)
 {
-	if (!arg || !arg->v || arg->v != selmon->lt[selmon->sellt])
+  if (!arg || !arg->v || arg->v != selmon->lt[selmon->sellt]) {
 		selmon->sellt = selmon->pertag->sellts[selmon->pertag->curtag] ^= 1;
-	if (arg && arg->v)
+  }
+  if (arg && arg->v) {
 		selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = (Layout *)arg->v;
+  }
 	strncpy(selmon->ltsymbol, selmon->lt[selmon->sellt]->symbol, sizeof selmon->ltsymbol);
 	if (selmon->sel)
 		arrange(selmon);
@@ -2043,7 +2046,16 @@ void
 togglemonocle(void)
 {
   if (selmon->pertag->curtag == 0) return;
-  setlayout(&((Arg)  {.v = &layouts[selmon->lt[selmon->sellt]->symbol == layouts[0].symbol ? 2 : 0] }));
+  if (selmon->lt[selmon->sellt]->symbol == layouts[0].symbol) {
+    if (!currentlayout) {
+      currentlayout = &layouts[2];
+    }
+    selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = currentlayout;
+  } else {
+    currentlayout = selmon->lt[selmon->sellt];
+    selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[selmon->pertag->curtag][selmon->sellt] = &layouts[0];
+  }
+  arrange(selmon);
 }
 
 void
