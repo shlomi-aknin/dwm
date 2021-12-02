@@ -84,7 +84,7 @@ static Key keys[] = {
   { SUPER,                       XK_o,              spawn,                SHCMD("alacritty -e htop") },
   { SUPER,                       XK_p,              spawn,                SHCMD("clipmenu && xdotool key shift+Insert") },
   { SUPER,                       XK_r,              spawn,                {.v = dmenucmd } },
-  { SUPER,                       XK_space,          view,                 {.ui = ~0 } },
+  { SUPER,                       XK_space,          togglewinview,        {0} },
   { SUPER,                       XK_t,              setlayout,            {.v = &layouts[2]} },
   { SUPER,                       XK_u,              shiftview,            {.i = -1 } },
   { SUPER,                       XK_v,              setlayout,            {.v = &layouts[3]} },
@@ -111,8 +111,6 @@ static Key keys[] = {
   { SUPER|SHIFT,                 XK_w,              spawn,                SHCMD("updatelastproject") },
   { SUPER|SHIFT,                 XK_x,              killunsel,            {0} },
   { SUPER|SHIFT,                 XK_z,              spawn,                SHCMD("alacritty -e vifm +only $(cat /tmp/lastdir)") },
-
-  { SUPER|CONTROL,               XK_l,              winview,              {0} },
 
   TAGKEYS(                       XK_1,              0)
   TAGKEYS(                       XK_2,              1)
