@@ -96,22 +96,23 @@ static Key keys[] = {
   { SUPER|SHIFT,                 XK_BackSpace,      spawn,                SHCMD("slimlock") },
   { SUPER|SHIFT,                 XK_F1,             spawn,                SHCMD("sudo reboot") },
   { SUPER|SHIFT,                 XK_F2,             spawn,                SHCMD("sudo poweroff") },
-  { SUPER|SHIFT,                 XK_Return,         winview,              {0} },
   { SUPER|SHIFT,                 XK_c,              spawn,                SHCMD("configselectornvim") },
   { SUPER|SHIFT,                 XK_h,              tagtoleft,            {.i = -1 } },
+  { SUPER|SHIFT,                 XK_i,              focusmaster,          {0} },
   { SUPER|SHIFT,                 XK_j,              pushdown,             {0} },
   { SUPER|SHIFT,                 XK_k,              pushup,               {0} },
   { SUPER|SHIFT,                 XK_l,              tagtoright,           {.i = +1 } },
-  { SUPER|SHIFT,                 XK_m,              focusmaster,          {0} },
+  { SUPER|SHIFT,                 XK_m,              zoom,                 {0} },
   { SUPER|SHIFT,                 XK_n,              spawn,                SHCMD("alacritty -e neomutt") },
   { SUPER|SHIFT,                 XK_o,              spawn,                SHCMD("projectselectornvim") },
   { SUPER|SHIFT,                 XK_p,              spawn,                SHCMD("clipmenu") },
   { SUPER|SHIFT,                 XK_q,              quit,                 {0} },
   { SUPER|SHIFT,                 XK_r,              quit,                 {1} },
-  { SUPER|SHIFT,                 XK_space,          zoom,                 {0} },
   { SUPER|SHIFT,                 XK_w,              spawn,                SHCMD("updatelastproject") },
   { SUPER|SHIFT,                 XK_x,              killunsel,            {0} },
   { SUPER|SHIFT,                 XK_z,              spawn,                SHCMD("alacritty -e vifm +only $(cat /tmp/lastdir)") },
+
+  { SUPER|CONTROL,               XK_l,              winview,              {0} },
 
   TAGKEYS(                       XK_1,              0)
   TAGKEYS(                       XK_2,              1)
