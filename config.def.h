@@ -47,9 +47,10 @@ static const Layout layouts[] = {
 };
 
 /* key definitions */
-#define SUPER Mod4Mask
-#define SHIFT ShiftMask
+#define ALT     Mod1Mask
 #define CONTROL ControlMask
+#define SHIFT   ShiftMask
+#define SUPER   Mod4Mask
 
 #define TAGKEYS(KEY,TAG) \
   { SUPER,                   KEY,      view,           {.ui = 1 << TAG} }, \
@@ -66,14 +67,18 @@ static const char *dmenucmd[] = { "dmenu_run", "-nb", "#000000", "-nf", "#ffffff
 static const char *termcmd[]  = { "alacritty", NULL };
 
 static Key keys[] = {
-  /* modifier                     key                function              argument */
+  /* modifier                    key                function              argument */
+  { SUPER,					             XK_Down,	          moveresize,		        {.v = (int []){ 0, 25, 0, 0 }}},
+  { SUPER,					             XK_Left,	          moveresize,		        {.v = (int []){ -25, 0, 0, 0 }}},
+  { SUPER,					             XK_Right,	        moveresize,		        {.v = (int []){ 25, 0, 0, 0 }}},
+  { SUPER,					             XK_Up,		          moveresize,		        {.v = (int []){ 0, -25, 0, 0 }}},
   { SUPER,                       XK_Delete,         killunsel,            {.i = 1} },
   { SUPER,                       XK_Return,         spawn,                {.v = termcmd } },
   { SUPER,                       XK_Tab,            view,                 {0} },
   { SUPER,                       XK_a,              spawn,                SHCMD("alacritty -e ssh -i ~/Documents/carmeter_aws_keypair_11062017.pem ubuntu@car-meter.com") },
   { SUPER,                       XK_b,              spawn,                SHCMD("google-chrome-stable --enable-features=WebUIDarkMode --force-dark-mode --force-device-scale-factor=1.2") },
   { SUPER,                       XK_c,              spawn,                SHCMD("alacritty -t 'Clock' --class 'ttyclock' -e /usr/local/bin/clock") },
-  { SUPER,                       XK_f,              setlayout,            {.v = &layouts[1]} },
+  { SUPER,                       XK_f,              togglefloating,       {NULL} },
   { SUPER,                       XK_h,              shiftviewclients,     {.i = -1 } },
   { SUPER,                       XK_i,              shiftview,            {.i = +1 } },
   { SUPER,                       XK_j,              focusstack,           {.i = +1 } },
@@ -96,6 +101,10 @@ static Key keys[] = {
   { SUPER|SHIFT,                 XK_BackSpace,      spawn,                SHCMD("slimlock") },
   { SUPER|SHIFT,                 XK_F1,             spawn,                SHCMD("sudo reboot") },
   { SUPER|SHIFT,                 XK_F2,             spawn,                SHCMD("sudo poweroff") },
+  { SUPER|SHIFT,			           XK_Down,	          moveresize,		        {.v = (int []){ 0, 0, 0, 25 }}},
+  { SUPER|SHIFT,			           XK_Up,		          moveresize,		        {.v = (int []){ 0, 0, 0, -25 }}},
+  { SUPER|SHIFT,			           XK_Right,	        moveresize,		        {.v = (int []){ 0, 0, 25, 0 }}},
+  { SUPER|SHIFT,			           XK_Left,	          moveresize,		        {.v = (int []){ 0, 0, -25, 0 }}},
   { SUPER|SHIFT,                 XK_c,              spawn,                SHCMD("configselectornvim") },
   { SUPER|SHIFT,                 XK_h,              tagtoleft,            {.i = -1 } },
   { SUPER|SHIFT,                 XK_i,              focusmaster,          {0} },
