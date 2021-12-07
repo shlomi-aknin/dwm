@@ -68,10 +68,6 @@ static const char *termcmd[]  = { "alacritty", NULL };
 
 static Key keys[] = {
   /* modifier                    key                function              argument */
-  { SUPER,					             XK_Down,	          moveresize,		        {.v = (int []){ 0, 25, 0, 0 }}},
-  { SUPER,					             XK_Left,	          moveresize,		        {.v = (int []){ -25, 0, 0, 0 }}},
-  { SUPER,					             XK_Right,	        moveresize,		        {.v = (int []){ 25, 0, 0, 0 }}},
-  { SUPER,					             XK_Up,		          moveresize,		        {.v = (int []){ 0, -25, 0, 0 }}},
   { SUPER,                       XK_Delete,         killunsel,            {.i = 1} },
   { SUPER,                       XK_Return,         spawn,                {.v = termcmd } },
   { SUPER,                       XK_Tab,            view,                 {0} },
@@ -101,10 +97,6 @@ static Key keys[] = {
   { SUPER|SHIFT,                 XK_BackSpace,      spawn,                SHCMD("slimlock") },
   { SUPER|SHIFT,                 XK_F1,             spawn,                SHCMD("sudo reboot") },
   { SUPER|SHIFT,                 XK_F2,             spawn,                SHCMD("sudo poweroff") },
-  { SUPER|SHIFT,			           XK_Down,	          moveresize,		        {.v = (int []){ 0, 0, 0, 25 }}},
-  { SUPER|SHIFT,			           XK_Up,		          moveresize,		        {.v = (int []){ 0, 0, 0, -25 }}},
-  { SUPER|SHIFT,			           XK_Right,	        moveresize,		        {.v = (int []){ 0, 0, 25, 0 }}},
-  { SUPER|SHIFT,			           XK_Left,	          moveresize,		        {.v = (int []){ 0, 0, -25, 0 }}},
   { SUPER|SHIFT,                 XK_c,              spawn,                SHCMD("configselectornvim") },
   { SUPER|SHIFT,                 XK_h,              tagtoleft,            {.i = -1 } },
   { SUPER|SHIFT,                 XK_i,              focusmaster,          {0} },
@@ -120,6 +112,16 @@ static Key keys[] = {
   { SUPER|SHIFT,                 XK_w,              spawn,                SHCMD("updatelastproject") },
   { SUPER|SHIFT,                 XK_x,              killunsel,            {0} },
   { SUPER|SHIFT,                 XK_z,              spawn,                SHCMD("alacritty -e vifm +only $(cat /tmp/lastdir)") },
+
+  { SUPER|CONTROL,					     XK_h,              moveresize,		        {.v = (int []){ -25, 0, 0, 0 }}},
+  { SUPER|CONTROL,					     XK_j,              moveresize,		        {.v = (int []){ 0, 25, 0, 0 }}},
+  { SUPER|CONTROL,					     XK_k,              moveresize,		        {.v = (int []){ 0, -25, 0, 0 }}},
+  { SUPER|CONTROL,					     XK_l,	            moveresize,		        {.v = (int []){ 25, 0, 0, 0 }}},
+
+  { SUPER|CONTROL|ALT,			     XK_h,  	          moveresize,		        {.v = (int []){ 0, 0, -25, 0 }}},
+  { SUPER|CONTROL|ALT,			     XK_j,  	          moveresize,		        {.v = (int []){ 0, 0, 0, 25 }}},
+  { SUPER|CONTROL|ALT,			     XK_k,		          moveresize,		        {.v = (int []){ 0, 0, 0, -25 }}},
+  { SUPER|CONTROL|ALT,			     XK_l,    	        moveresize,		        {.v = (int []){ 0, 0, 25, 0 }}},
 
   TAGKEYS(                       XK_1,              0)
   TAGKEYS(                       XK_2,              1)
