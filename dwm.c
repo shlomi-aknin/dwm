@@ -187,7 +187,7 @@ static void grabkeys(void);
 static void incnmaster(const Arg *arg);
 static void keypress(XEvent *e);
 static void killclient(const Arg *arg);
-static void killunsel(const Arg *arg);
+static void killall(const Arg *arg);
 static void manage(Window w, XWindowAttributes *wa);
 static void mappingnotify(XEvent *e);
 static void maprequest(XEvent *e);
@@ -1135,7 +1135,7 @@ killclient(const Arg *arg)
 }
 
 void
-killunsel(const Arg *arg)
+killall(const Arg *arg)
 {
 	Client *i = NULL;
 
@@ -1143,7 +1143,7 @@ killunsel(const Arg *arg)
 		return;
 
 	for (i = selmon->clients; i; i = i->next) {
-		if (ISVISIBLE(i) && (arg->i == 1 ? 1 : i != selmon->sel)) {
+		if (ISVISIBLE(i)) {
 			if (!sendevent(i, wmatom[WMDelete])) {
 				XGrabServer(dpy);
 				XSetErrorHandler(xerrordummy);

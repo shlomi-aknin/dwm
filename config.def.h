@@ -68,7 +68,6 @@ static const char *termcmd[]  = { "alacritty", NULL };
 
 static Key keys[] = {
   /* modifier                    key                function              argument */
-  { SUPER,                       XK_Delete,         killunsel,            {.i = 1} },
   { SUPER,                       XK_Return,         spawn,                {.v = termcmd } },
   { SUPER,                       XK_Tab,            view,                 {0} },
   { SUPER,                       XK_a,              spawn,                SHCMD("alacritty -e ssh -i ~/Documents/carmeter_aws_keypair_11062017.pem ubuntu@car-meter.com") },
@@ -110,7 +109,7 @@ static Key keys[] = {
   { SUPER|SHIFT,                 XK_q,              quit,                 {0} },
   { SUPER|SHIFT,                 XK_r,              quit,                 {1} },
   { SUPER|SHIFT,                 XK_w,              spawn,                SHCMD("updatelastproject") },
-  { SUPER|SHIFT,                 XK_x,              killunsel,            {0} },
+  { SUPER|SHIFT,                 XK_x,              killall,              {0} },
   { SUPER|SHIFT,                 XK_z,              spawn,                SHCMD("alacritty -e vifm +only $(cat /tmp/lastdir)") },
 
   { SUPER|CONTROL,					     XK_h,              moveresize,		        {.v = (int []){ -25, 0, 0, 0 }}},
