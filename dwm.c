@@ -2505,10 +2505,10 @@ view(const Arg *arg)
 	if (selmon->showbar != selmon->pertag->showbars[selmon->pertag->curtag])
 		togglebar(NULL);
 
-	focus(NULL);
   if (selmon->pertag->curtag == 0) {
     selmon->lt[selmon->sellt] = &layouts[2];
   }
+	focus(NULL);
 	arrange(selmon);
 }
 
