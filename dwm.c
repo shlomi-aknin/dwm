@@ -2506,11 +2506,10 @@ view(const Arg *arg)
 		togglebar(NULL);
 
 	focus(NULL);
-	arrange(selmon);
   if (selmon->pertag->curtag == 0) {
-      Arg a = {.v = &layouts[4]};
-      setlayout(&a);
+    selmon->lt[selmon->sellt] = &layouts[2];
   }
+	arrange(selmon);
 }
 
 Client *
