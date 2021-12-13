@@ -2508,7 +2508,7 @@ view(const Arg *arg)
 	focus(NULL);
 	arrange(selmon);
   if (selmon->pertag->curtag == 0) {
-      Arg a = {.v = &layouts[2]};
+      Arg a = {.v = &layouts[4]};
       setlayout(&a);
   }
 }
