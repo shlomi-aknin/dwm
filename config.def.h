@@ -44,6 +44,7 @@ static const Layout layouts[] = {
   { "><>",      NULL },    /* no layout function means floating behavior */
   { "[]=",      tile },    /* first entry is default */
   { "TTT",      bstack },
+	{ "###",      gaplessgrid },
 };
 
 /* key definitions */
@@ -74,6 +75,7 @@ static Key keys[] = {
   { SUPER,                       XK_b,              spawn,                SHCMD("google-chrome-stable --enable-features=WebUIDarkMode --force-dark-mode --force-device-scale-factor=1.2") },
   { SUPER,                       XK_c,              spawn,                SHCMD("alacritty -t 'Clock' --class 'ttyclock' -e /usr/local/bin/clock") },
   { SUPER,                       XK_f,              togglefloating,       {NULL} },
+	{ SUPER,                       XK_g,              setlayout,            {.v = &layouts[4]} },
   { SUPER,                       XK_h,              shiftviewclients,     {.i = -1 } },
   { SUPER,                       XK_i,              shiftview,            {.i = +1 } },
   { SUPER,                       XK_j,              focusstack,           {.i = +1 } },
