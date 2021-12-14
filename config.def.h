@@ -79,6 +79,10 @@ static Key keys[] = {
   { ALT,                         XK_8,              gridfocus,            {.ui = 8 } },
   { ALT,                         XK_9,              gridfocus,            {.ui = 9 } },
   { ALT,                         XK_0,              gridfocus,            {.ui = 10 } },
+  { ALT,                         XK_h,              movevisual,           {.i = -1 } },
+  { ALT,                         XK_j,              focusstack,           {.i = +1 } },
+  { ALT,                         XK_k,              focusstack,           {.i = -1 } },
+  { ALT,                         XK_l,              movevisual,           {.i = +1 } },
 
   { CONTROL|ALT,                 XK_1,              gridfocus,            {.ui = 11 } },
   { CONTROL|ALT,                 XK_2,              gridfocus,            {.ui = 12 } },

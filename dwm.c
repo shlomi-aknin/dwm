@@ -198,6 +198,7 @@ static void monocle(Monitor *m);
 static void motionnotify(XEvent *e);
 static void movemouse(const Arg *arg);
 static void moveresize(const Arg *arg);
+static void movevisual(const Arg *arg);
 static Client *nexttiled(Client *c);
 static void pop(Client *);
 static Client *prevtiled(Client *c);
@@ -1400,6 +1401,29 @@ moveresize(const Arg *arg)
 		m->sel->h + ((int *)arg->v)[3],
 		True);
 	while(XCheckMaskEvent(dpy, EnterWindowMask, &ev));
+}
+
+void
+movevisual(const Arg *arg)
+{
+  Client *c = selmon->sel;
+  Client *t = NULL, *p = NULL;
+  if(selmon->lt[selmon->sellt]->arrange != gaplessgrid || !ISVISIBLE(c)) return;
+
+  if (arg->i > 0) {
+    for(t = selmon->sel->next; t; t = t->next) {
+      if (t->y == c->y) break;
+    }
+  } else {
+    for(t = selmon->clients; t != c; t = t->next) {
+      if (t->y != c->y) continue;
+      if (!p) p = t;
+      else if (t > p) p = t;
+    }
+  }
+
+  focus(arg->i > 0 ? t : p);
+  arrange(selmon);
 }
 
 Client *
