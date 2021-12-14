@@ -92,6 +92,7 @@ struct Client {
 	int basew, baseh, incw, inch, maxw, maxh, minw, minh;
 	int bw, oldbw;
 	unsigned int tags;
+	unsigned int grididx;
 	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
 	int floatborderpx;
 	int hasfloatbw;
@@ -184,6 +185,7 @@ static int getrootptr(int *x, int *y);
 static long getstate(Window w);
 static int gettextprop(Window w, Atom atom, char *text, unsigned int size);
 static void grabkeys(void);
+static void gridfocus(Arg *arg);
 static void gaplessgrid(Monitor *m);
 static void incnmaster(const Arg *arg);
 static void keypress(XEvent *e);
@@ -1084,6 +1086,17 @@ grabkeys(void)
 }
 
 void
+gridfocus(Arg *arg) {
+  Client *c = selmon->clients;
+  for (; c; c = c->next) {
+    if (c->grididx + 1 == arg->ui) break;
+  }
+
+  focus(c);
+  arrange(selmon);
+}
+
+void
 gaplessgrid(Monitor *m) {
 	unsigned int n, cols, rows, cn, rn, i, cx, cy, cw, ch;
 	Client *c;
@@ -1105,6 +1118,7 @@ gaplessgrid(Monitor *m) {
 	cn = 0; /* current column number */
 	rn = 0; /* current row number */
 	for(i = 0, c = nexttiled(m->clients); c; i++, c = nexttiled(c->next)) {
+    c->grididx = i;
 		if(i/rows + 1 > cols - n%cols)
 			rows = n/cols + 1;
 		ch = rows ? m->wh / rows : m->wh;
@@ -2506,7 +2520,7 @@ view(const Arg *arg)
 		togglebar(NULL);
 
   if (selmon->pertag->curtag == 0) {
-    selmon->lt[selmon->sellt] = &layouts[2];
+    selmon->lt[selmon->sellt] = &layouts[4];
   }
 	focus(NULL);
 	arrange(selmon);

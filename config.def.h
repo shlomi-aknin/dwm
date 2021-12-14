@@ -69,6 +69,28 @@ static const char *termcmd[]  = { "alacritty", NULL };
 
 static Key keys[] = {
   /* modifier                    key                function              argument */
+  { ALT,                         XK_1,              gridfocus,            {.ui = 1 } },
+  { ALT,                         XK_2,              gridfocus,            {.ui = 2 } },
+  { ALT,                         XK_3,              gridfocus,            {.ui = 3 } },
+  { ALT,                         XK_4,              gridfocus,            {.ui = 4 } },
+  { ALT,                         XK_5,              gridfocus,            {.ui = 5 } },
+  { ALT,                         XK_6,              gridfocus,            {.ui = 6 } },
+  { ALT,                         XK_7,              gridfocus,            {.ui = 7 } },
+  { ALT,                         XK_8,              gridfocus,            {.ui = 8 } },
+  { ALT,                         XK_9,              gridfocus,            {.ui = 9 } },
+  { ALT,                         XK_0,              gridfocus,            {.ui = 10 } },
+
+  { CONTROL|ALT,                 XK_1,              gridfocus,            {.ui = 11 } },
+  { CONTROL|ALT,                 XK_2,              gridfocus,            {.ui = 12 } },
+  { CONTROL|ALT,                 XK_3,              gridfocus,            {.ui = 13 } },
+  { CONTROL|ALT,                 XK_4,              gridfocus,            {.ui = 14 } },
+  { CONTROL|ALT,                 XK_5,              gridfocus,            {.ui = 15 } },
+  { CONTROL|ALT,                 XK_6,              gridfocus,            {.ui = 16 } },
+  { CONTROL|ALT,                 XK_7,              gridfocus,            {.ui = 17 } },
+  { CONTROL|ALT,                 XK_8,              gridfocus,            {.ui = 18 } },
+  { CONTROL|ALT,                 XK_9,              gridfocus,            {.ui = 19 } },
+  { CONTROL|ALT,                 XK_0,              gridfocus,            {.ui = 20 } },
+
   { SUPER,                       XK_Return,         spawn,                {.v = termcmd } },
   { SUPER,                       XK_Tab,            view,                 {0} },
   { SUPER,                       XK_a,              spawn,                SHCMD("alacritty -e ssh -i ~/Documents/carmeter_aws_keypair_11062017.pem ubuntu@car-meter.com") },
