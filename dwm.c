@@ -91,6 +91,7 @@ struct Client {
 	int oldx, oldy, oldw, oldh;
 	int basew, baseh, incw, inch, maxw, maxh, minw, minh;
 	int bw, oldbw;
+  int gridrow, gridcol;
 	unsigned int tags;
 	unsigned int grididx;
 	int isfixed, isfloating, isurgent, neverfocus, oldstate, isfullscreen;
@@ -1027,6 +1028,8 @@ gaplessgrid(Monitor *m) {
 		ch = rows ? m->wh / rows : m->wh;
 		cx = m->wx + cn*cw;
 		cy = m->wy + rn*ch;
+    c->gridrow = rn;
+    c->gridcol = cn;
 		resize(c, cx, cy, cw - 2 * c->bw, ch - 2 * c->bw, False);
 		rn++;
 		if(rn >= rows) {
@@ -1407,22 +1410,30 @@ void
 movevisual(const Arg *arg)
 {
   Client *c = selmon->sel;
-  Client *t = NULL, *p = NULL;
+  Client *t = NULL;
+  int found = 0;
   if(selmon->lt[selmon->sellt]->arrange != gaplessgrid || !ISVISIBLE(c)) return;
 
   if (arg->i > 0) {
     for(t = selmon->sel->next; t; t = t->next) {
-      if (t->y == c->y) break;
+      if (t->gridcol == c->gridcol + 1 && t->gridrow == c->gridrow) break;
     }
   } else {
-    for(t = selmon->clients; t != c; t = t->next) {
-      if (t->y != c->y) continue;
-      if (!p) p = t;
-      else if (t > p) p = t;
+    for(t = selmon->clients; t; t = t->next) {
+      if (t->gridcol == c->gridcol - 1 && t->gridrow == c->gridrow) {
+        found = 1;
+        break;
+      }
+    }
+
+    if (found == 0) {
+      for(t = selmon->clients; t; t = t->next) {
+        if (t->gridcol == c->gridcol - 1 && t->gridrow == c->gridrow - 1) break;
+      }
     }
   }
 
-  focus(arg->i > 0 ? t : p);
+  focus(t);
   arrange(selmon);
 }
 
