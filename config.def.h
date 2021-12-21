@@ -84,6 +84,9 @@ static Key keys[] = {
   { CONTROL|ALT,                 XK_k,              focusstack,           {.i = -1 } },
   { CONTROL|ALT,                 XK_l,              movevisual,           {.i = +1 } },
 
+  { CONTROL|SHIFT,               XK_h,              spawn,                SHCMD("dunstctl history-pop") },
+  { CONTROL|SHIFT,               XK_i,              spawn,                SHCMD("dunstctl close-all") },
+
   { SUPER,                       XK_Return,         spawn,                {.v = termcmd } },
   { SUPER,                       XK_Tab,            view,                 {0} },
   { SUPER,                       XK_a,              spawn,                SHCMD("alacritty -e ssh -i ~/Documents/carmeter_aws_keypair_11062017.pem ubuntu@car-meter.com") },
@@ -111,8 +114,8 @@ static Key keys[] = {
 
   { SUPER|SHIFT,                 XK_0,              tag,                  {.ui = ~0 } },
   { SUPER|SHIFT,                 XK_BackSpace,      spawn,                SHCMD("slimlock") },
-  { SUPER|SHIFT,                 XK_F1,             spawn,                SHCMD("sudo reboot") },
-  { SUPER|SHIFT,                 XK_F2,             spawn,                SHCMD("sudo poweroff") },
+  { SUPER|SHIFT,                 XK_F1,             spawn,                SHCMD("reboot") },
+  { SUPER|SHIFT,                 XK_F2,             spawn,                SHCMD("poweroff") },
   { SUPER|SHIFT,                 XK_c,              spawn,                SHCMD("configselectornvim") },
   { SUPER|SHIFT,                 XK_h,              tagtoleft,            {.i = -1 } },
   { SUPER|SHIFT,                 XK_i,              focusmaster,          {0} },
