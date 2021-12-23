@@ -20,6 +20,7 @@
  *
  * To understand everything else, start reading main().
  */
+#include <assert.h>
 #include <errno.h>
 #include <locale.h>
 #include <signal.h>
@@ -212,6 +213,8 @@ static void resize(Client *c, int x, int y, int w, int h, int interact);
 static void resizeclient(Client *c, int x, int y, int w, int h);
 static void resizemouse(const Arg *arg);
 static void restack(Monitor *m);
+static void restartwm(int argc, char *argv[]);
+static void restorewm(void);
 static void run(void);
 static void scan(void);
 static int sendevent(Client *c, Atom proto);
@@ -267,6 +270,7 @@ static void zoom(const Arg *arg);
 Layout *currentlayout = NULL;
 static const char broken[] = "broken";
 static char stext[256];
+static char *sessfile = "/tmp/dwmsession";
 static int screen;
 static int sw, sh;           /* X display screen geometry width, height */
 static int bh, blw = 0;      /* bar geometry */
@@ -1551,7 +1555,7 @@ pushup(const Arg *arg) {
 void
 quit(const Arg *arg)
 {
-	if(arg->i) restart = 1;
+	if (arg->i) restart = 1;
 	running = 0;
 }
 
@@ -1697,6 +1701,59 @@ restack(Monitor *m)
 	}
 	XSync(dpy, False);
 	while (XCheckMaskEvent(dpy, EnterWindowMask, &ev));
+}
+
+void
+restartwm(int argc, char *argv[])
+{
+  Monitor *m;
+  Client *c;
+  FILE *fp = fopen(sessfile, "w");
+  int i = 0;
+
+  for (m = mons; m; m = m->next, i++) {
+    fprintf(fp, "m:%d:%s\n", i, m->ltsymbol);
+    for (c = m->clients; c; c = c->next) {
+      fprintf(fp, "w:%d:%d\n", (int)c->win, pow(c->tags));
+    }
+  }
+
+  fclose(fp);
+  argv[2] = sessfile;
+  execvp(argv[0], argv);
+}
+
+void restorewm(void)
+{
+  Monitor *m;
+  Client *c;
+  FILE *fp = fopen(sessfile, "a+");
+  char *line = NULL;
+  size_t len = 0;
+  ssize_t read;
+
+  fprintf(fp, "Restoring....\n");
+
+  while ((read = getline(&line, &len, fp)) != -1) {
+    printf("Retrieved line of length %zu:\n", read);
+    printf("%s", line);
+  }
+
+  /* while(fgets(chunk, sizeof(chunk), fp) != NULL) { */
+  /*   fprintf(fp, "%s\n", chunk); */
+
+    /* for(m = mons; m; m = m->next) { */
+    /*   for (c = m->clients; c; c = c->next) { */
+    /*     if ((int)c->win == tokens[1]) c->tags = 1 << (int)tokens[2]; */
+    /*   } */
+    /* } */
+  /* } */
+
+  fclose(fp);
+
+  /* for(m = mons; m; m = m->next) { */
+  /*   arrange(m); */
+  /* } */
 }
 
 void
@@ -2677,8 +2734,9 @@ main(int argc, char *argv[])
 		die("pledge");
 #endif /* __OpenBSD__ */
 	scan();
+  if (strcmp(argv[2], sessfile) == 0) restorewm();
 	run();
-  if(restart) execvp(argv[0], argv);
+  if (restart) restartwm(argc, argv);
 	cleanup();
 	XCloseDisplay(dpy);
 	return EXIT_SUCCESS;

@@ -6,3 +6,5 @@
 
 void die(const char *fmt, ...);
 void *ecalloc(size_t nmemb, size_t size);
+int pow(int num);
+char** str_split(char* a_str, const char a_delim);
