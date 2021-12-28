@@ -1711,9 +1711,9 @@ restartwm(int argc, char *argv[])
   FILE *fp = fopen(sessfile, "w");
   int i = 0;
 
+  fprintf(fp, "c:%d\n", pow(selmon->sel->tags)+1);
   for (m = mons; m; m = m->next, i++) {
     for (c = m->clients; c; c = c->next) {
-      printf("tag: %d\n", pow(c->tags)+1);
       fprintf(fp, "w:%x:%d\n", c->win, pow(c->tags)+1);
     }
   }
@@ -1725,6 +1725,7 @@ restartwm(int argc, char *argv[])
 
 void restorewm(void)
 {
+  Arg a;
   Monitor *m;
   Client *c;
   FILE *fp = fopen(sessfile, "r");
@@ -1738,16 +1739,27 @@ void restorewm(void)
 
   while(fgets(buffer, MAX_LENGTH, fp)) {
     type = substr(buffer, 0, 1);
-    tmp = strstr(buffer, ":");
-    tmp = substr(tmp, 1, strlen(tmp)-1);
-    winid = substr(tmp, 0, strcspn(tmp, ":"));
-    tagid = substr(tmp, strcspn(tmp, ":")+1, strlen(tmp));
-    for(m = mons; m; m = m->next) {
-      for (c = m->clients; c; c = c->next) {
-        if (c->win == strtol(winid, NULL, 16)) {
-          c->tags = 1 << ((int)*tagid - 48) - 1;
-        }
-      }
+    switch (*type) {
+      case 'w':
+          tmp = strstr(buffer, ":");
+          tmp = substr(tmp, 1, strlen(tmp)-1);
+          winid = substr(tmp, 0, strcspn(tmp, ":"));
+          tagid = substr(tmp, strcspn(tmp, ":")+1, strlen(tmp));
+          for(m = mons; m; m = m->next) {
+            for (c = m->clients; c; c = c->next) {
+              if (c->win == strtol(winid, NULL, 16)) {
+                c->tags = 1 << ((int)*tagid - 48) - 1;
+              }
+            }
+          }
+        break;
+      case 'c':
+          tmp = strstr(buffer, ":");
+          tmp = substr(tmp, 1, strlen(tmp)-1);
+          a.ui = 1 << ((int)*tmp - 48) - 1;
+        break;
+      default:
+        break;
     }
   }
 
@@ -1757,6 +1769,7 @@ void restorewm(void)
     focus(NULL);
     arrange(m);
   }
+  view(&a);
 }
 
 void
