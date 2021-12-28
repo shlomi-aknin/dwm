@@ -189,6 +189,7 @@ static long getstate(Window w);
 static int gettextprop(Window w, Atom atom, char *text, unsigned int size);
 static void grabkeys(void);
 static void gridfocus(Arg *arg);
+static void gridortagmovement(Arg *arg);
 static void incnmaster(const Arg *arg);
 static void keypress(XEvent *e);
 static void killclient(const Arg *arg);
@@ -1129,6 +1130,15 @@ grabkeys(void)
 					XGrabKey(dpy, code, keys[i].mod | modifiers[j], root,
 						True, GrabModeAsync, GrabModeAsync);
 	}
+}
+
+void gridortagmovement(Arg *arg)
+{
+  if (selmon->pertag->curtag == 0) {
+    movevisual(arg);
+  } else {
+    shiftviewclients(arg);
+  }
 }
 
 void
