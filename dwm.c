@@ -270,7 +270,7 @@ static void zoom(const Arg *arg);
 Layout *currentlayout = NULL;
 static const char broken[] = "broken";
 static char stext[256];
-static char *sessfile = "/tmp/dwmsession";
+static char *sessfile = "/tmp/dwm.sess";
 static int screen;
 static int sw, sh;           /* X display screen geometry width, height */
 static int bh, blw = 0;      /* bar geometry */
@@ -1712,9 +1712,9 @@ restartwm(int argc, char *argv[])
   int i = 0;
 
   for (m = mons; m; m = m->next, i++) {
-    fprintf(fp, "m:%d:%s\n", i, m->ltsymbol);
     for (c = m->clients; c; c = c->next) {
-      fprintf(fp, "w:%d:%d\n", (int)c->win, pow(c->tags));
+      printf("tag: %d\n", pow(c->tags)+1);
+      fprintf(fp, "w:%x:%d\n", c->win, pow(c->tags)+1);
     }
   }
 
@@ -1727,31 +1727,33 @@ void restorewm(void)
 {
   Monitor *m;
   Client *c;
-  FILE *fp = fopen(sessfile, "a+");
-  char *line = NULL;
-  size_t len = 0;
-  ssize_t read;
+  FILE *fp = fopen(sessfile, "r");
 
-  fprintf(fp, "Restoring....\n");
+  const unsigned MAX_LENGTH = 256;
+  char buffer[MAX_LENGTH];
+  char *winid;
+  char *tagid;
+  char *tmp;
 
-  while ((read = getline(&line, &len, fp)) != -1) {
-    printf("Retrieved line of length %zu:\n", read);
-    printf("%s", line);
+  while(fgets(buffer, MAX_LENGTH, fp)) {
+    tmp = strstr(buffer, ":");
+    tmp = substr(tmp, 1, strlen(tmp)-1);
+    winid = substr(tmp, 0, strcspn(tmp, ":"));
+    tagid = substr(tmp, strcspn(tmp, ":")+1, strlen(tmp));
+    for(m = mons; m; m = m->next) {
+      for (c = m->clients; c; c = c->next) {
+        if (c->win == strtol(winid, NULL, 16)) {
+          printf("tag: %d\n", (int)*tagid - 48 & TAGMASK);
+          c->tags = ((int)*tagid - 48) + 1;
+        }
+      }
+    }
   }
-
-  /* while(fgets(chunk, sizeof(chunk), fp) != NULL) { */
-  /*   fprintf(fp, "%s\n", chunk); */
-
-    /* for(m = mons; m; m = m->next) { */
-    /*   for (c = m->clients; c; c = c->next) { */
-    /*     if ((int)c->win == tokens[1]) c->tags = 1 << (int)tokens[2]; */
-    /*   } */
-    /* } */
-  /* } */
 
   fclose(fp);
 
   /* for(m = mons; m; m = m->next) { */
+  /*   focus(NULL); */
   /*   arrange(m); */
   /* } */
 }
