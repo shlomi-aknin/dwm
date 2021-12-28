@@ -233,6 +233,7 @@ static void sigchld(int unused);
 static void sighup(int unused);
 static void sigterm(int unused);
 static void spawn(const Arg *arg);
+static Layout symboltolayout(char *symbol);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
 static void tagtoleft(const Arg *arg);
@@ -1740,6 +1741,7 @@ void restorewm(void)
   char *type;
   char *winid;
   char *tagid;
+  char *ltsymbol;
   char *tmp;
 
   while(fgets(buffer, MAX_LENGTH, fp)) {
@@ -1762,6 +1764,14 @@ void restorewm(void)
           tmp = strstr(buffer, ":");
           tmp = substr(tmp, 1, strlen(tmp)-1);
           a.ui = 1 << ((int)*tmp - 48) - 1;
+        break;
+      case 'l':
+          /* tmp = strstr(buffer, ":"); */
+          /* tmp = substr(tmp, 1, strlen(tmp)-1); */
+          /* tagid = substr(tmp, 0, strcspn(tmp, ":")); */
+          /* ltsymbol = substr(tmp, strcspn(tmp, ":")+1, strlen(tmp)); */
+          /* Layout layout = symboltolayout(ltsymbol); */
+          /* printf("symbol %s\n", (&layout)->symbol); */
         break;
       default:
         break;
@@ -2115,6 +2125,20 @@ sigterm(int unused)
 {
 	Arg a = {.i = 0};
 	quit(&a);
+}
+
+Layout symboltolayout(char *symbol)
+{
+  int i;
+  for (i = 0; i < LENGTH(layouts); i++) {
+    printf("(&layouts[i])->symbol: %s\n", (&layouts[i])->symbol);
+    printf("symbol: %s\n", symbol);
+    if ((&layouts[i])->symbol == symbol) {
+      return layouts[i];
+    }
+  }
+
+  return (Layout) { "><>",      NULL };
 }
 
 void
