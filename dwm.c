@@ -1712,7 +1712,12 @@ restartwm(int argc, char *argv[])
   int i = 0;
 
   fprintf(fp, "c:%d\n", pow(selmon->sel->tags)+1);
-  for (m = mons; m; m = m->next, i++) {
+
+  for (m = mons; m; m = m->next) {
+    for (i = 0; i <= LENGTH(tags); i++) {
+      fprintf(fp, "l:%d:%s\n", i, m->pertag->ltidxs[i][1]->symbol);
+    }
+
     for (c = m->clients; c; c = c->next) {
       fprintf(fp, "w:%x:%d\n", c->win, pow(c->tags)+1);
     }
