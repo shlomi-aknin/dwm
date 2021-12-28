@@ -1731,11 +1731,13 @@ void restorewm(void)
 
   const unsigned MAX_LENGTH = 256;
   char buffer[MAX_LENGTH];
+  char *type;
   char *winid;
   char *tagid;
   char *tmp;
 
   while(fgets(buffer, MAX_LENGTH, fp)) {
+    type = substr(buffer, 0, 1);
     tmp = strstr(buffer, ":");
     tmp = substr(tmp, 1, strlen(tmp)-1);
     winid = substr(tmp, 0, strcspn(tmp, ":"));
@@ -1743,8 +1745,7 @@ void restorewm(void)
     for(m = mons; m; m = m->next) {
       for (c = m->clients; c; c = c->next) {
         if (c->win == strtol(winid, NULL, 16)) {
-          printf("tag: %d\n", (int)*tagid - 48 & TAGMASK);
-          c->tags = ((int)*tagid - 48) + 1;
+          c->tags = 1 << ((int)*tagid - 48) - 1;
         }
       }
     }
@@ -1752,10 +1753,10 @@ void restorewm(void)
 
   fclose(fp);
 
-  /* for(m = mons; m; m = m->next) { */
-  /*   focus(NULL); */
-  /*   arrange(m); */
-  /* } */
+  for(m = mons; m; m = m->next) {
+    focus(NULL);
+    arrange(m);
+  }
 }
 
 void
