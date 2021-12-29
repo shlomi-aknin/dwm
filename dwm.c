@@ -1134,11 +1134,7 @@ grabkeys(void)
 
 void gridortagmovement(Arg *arg)
 {
-  if (selmon->pertag->curtag == 0) {
-    movevisual(arg);
-  } else {
-    shiftviewclients(arg);
-  }
+  selmon->pertag->curtag == 0 ? movevisual(arg) : shiftviewclients(arg);
 }
 
 void
