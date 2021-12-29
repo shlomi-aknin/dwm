@@ -110,8 +110,8 @@ static Key keys[] = {
 
   { SUPER|SHIFT,                 XK_0,              tag,                  {.ui = ~0 } },
   { SUPER|SHIFT,                 XK_BackSpace,      spawn,                SHCMD("slimlock") },
-  { SUPER|SHIFT,                 XK_F1,             spawn,                SHCMD("reboot") },
-  { SUPER|SHIFT,                 XK_F2,             spawn,                SHCMD("poweroff") },
+  { SUPER|SHIFT,                 XK_F1,             spawn,                SHCMD("sudo reboot") },
+  { SUPER|SHIFT,                 XK_F2,             spawn,                SHCMD("sudo poweroff") },
   { SUPER|SHIFT,                 XK_c,              spawn,                SHCMD("configselectornvim") },
   { SUPER|SHIFT,                 XK_h,              tagtoleft,            {.i = -1 } },
   { SUPER|SHIFT,                 XK_i,              focusmaster,          {0} },
