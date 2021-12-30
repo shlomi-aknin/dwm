@@ -743,6 +743,7 @@ createmon(void)
 {
 	Monitor *m;
 	unsigned int i;
+  Tag t;
 
 	m = ecalloc(1, sizeof(Monitor));
 	m->tagset[0] = m->tagset[1] = 1;
@@ -760,8 +761,9 @@ createmon(void)
 		m->pertag->nmasters[i] = m->nmaster;
 		m->pertag->mfacts[i] = m->mfact;
 
-		m->pertag->ltidxs[i][0] = m->lt[0];
-		m->pertag->ltidxs[i][1] = m->lt[1];
+    t = tagArr[i];
+		m->pertag->ltidxs[i][0] = t.layout ? t.layout : m->lt[0];
+		m->pertag->ltidxs[i][1] = t.layout ? t.layout : m->lt[1];
 		m->pertag->sellts[i] = m->sellt;
 
 		m->pertag->showbars[i] = m->showbar;
@@ -1723,12 +1725,14 @@ restartwm(int argc, char *argv[])
   Client *c;
   FILE *fp = fopen(sessfile, "w");
   int i = 0;
+  Tag t;
 
   fprintf(fp, "c:%d\n", pow(selmon->sel->tags)+1);
 
   for (m = mons; m; m = m->next) {
     for (i = 0; i < LENGTH(tags); i++) {
-      fprintf(fp, "l:%d:%s\n", i+1, m->pertag->ltidxs[i+1][1]->symbol);
+      t = tagArr[i];
+      fprintf(fp, "l:%d:%s\n", i+1, t.layout ? t.layout->symbol : m->pertag->ltidxs[i+1][1]->symbol);
     }
 
     for (c = m->clients; c; c = c->next) {
@@ -1784,8 +1788,9 @@ void restorewm(void)
           tagid = substr(tmp, 0, strcspn(tmp, ":"));
           ltsymbol = substr(tmp, strcspn(tmp, ":")+1, strlen(tmp));
           Layout *layout = symboltolayout(ltsymbol);
+          selmon->lt[selmon->sellt] = selmon->pertag->ltidxs[(int)*tagid - 48][selmon->sellt] = layout ? layout : &layouts[0];
           t.layout = layout;
-          tagArr[((int)*tagid - 48)] = t;
+          tagArr[((int)*tagid - 48) - 1] = t;
         break;
       default:
         break;
@@ -2144,15 +2149,13 @@ sigterm(int unused)
 Layout *symboltolayout(char *symbol)
 {
   int i;
-  Layout *l = &layouts[0];
   for (i = 0; i < LENGTH(layouts); i++) {
     if (strcmp((&layouts[i])->symbol, symbol) == 0) {
-      l = &layouts[i];
-      break;
+      return &layouts[i];
     }
   }
 
-  return l;
+  return NULL;
 }
 
 void
@@ -2677,10 +2680,6 @@ view(const Arg *arg)
 
 	focus(NULL);
 	arrange(selmon);
-  t = tagArr[selmon->pertag->curtag % LENGTH(tags)];
-  Arg a;
-  a.v = t.layout ? t.layout : &layouts[0];
-  setlayout(&a);
 }
 
 Client *
