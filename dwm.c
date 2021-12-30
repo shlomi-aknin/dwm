@@ -1732,7 +1732,7 @@ restartwm(int argc, char *argv[])
   for (m = mons; m; m = m->next) {
     for (i = 0; i < LENGTH(tags); i++) {
       t = tagArr[i];
-      fprintf(fp, "l:%d:%s\n", i+1, t.layout ? t.layout->symbol : m->pertag->ltidxs[i+1][1]->symbol);
+      fprintf(fp, "l:%d:%s\n", i+1, t.layout ? t.layout->symbol : (strcmp(m->pertag->ltidxs[i+1][1]->symbol , (&layouts[1])->symbol) == 0 ? (&layouts[0])->symbol : m->pertag->ltidxs[i+1][1]->symbol));
     }
 
     for (c = m->clients; c; c = c->next) {
