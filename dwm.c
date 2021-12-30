@@ -1799,6 +1799,8 @@ void restorewm(void)
 
   fclose(fp);
   view(&a);
+  a.v = tagArr[selmon->pertag->curtag - 1].layout;
+  setlayout(&a);
 }
 
 void
