@@ -234,7 +234,7 @@ static void sigchld(int unused);
 static void sighup(int unused);
 static void sigterm(int unused);
 static void spawn(const Arg *arg);
-static Layout symboltolayout(char *symbol);
+static Layout *symboltolayout(char *symbol);
 static void tag(const Arg *arg);
 static void tagmon(const Arg *arg);
 static void tagtoleft(const Arg *arg);
@@ -318,8 +318,14 @@ struct Pertag {
 	int showbars[LENGTH(tags) + 1]; /* display bar for the current tag */
 };
 
+typedef struct {
+  Layout *layout;
+} Tag;
+
 /* compile-time check if all tags fit into an unsigned int bit array. */
 struct NumTags { char limitexceeded[LENGTH(tags) > 31 ? -1 : 1]; };
+
+static Tag tagArr[LENGTH(tags)];
 
 /* function implementations */
 void
@@ -1721,8 +1727,8 @@ restartwm(int argc, char *argv[])
   fprintf(fp, "c:%d\n", pow(selmon->sel->tags)+1);
 
   for (m = mons; m; m = m->next) {
-    for (i = 0; i <= LENGTH(tags); i++) {
-      fprintf(fp, "l:%d:%s\n", i, m->pertag->ltidxs[i][1]->symbol);
+    for (i = 0; i < LENGTH(tags); i++) {
+      fprintf(fp, "l:%d:%s\n", i+1, m->pertag->ltidxs[i+1][1]->symbol);
     }
 
     for (c = m->clients; c; c = c->next) {
@@ -1741,6 +1747,7 @@ void restorewm(void)
   Monitor *m;
   Client *c;
   FILE *fp = fopen(sessfile, "r");
+  Tag t;
 
   const unsigned MAX_LENGTH = 256;
   char buffer[MAX_LENGTH];
@@ -1772,12 +1779,13 @@ void restorewm(void)
           a.ui = 1 << ((int)*tmp - 48) - 1;
         break;
       case 'l':
-          /* tmp = strstr(buffer, ":"); */
-          /* tmp = substr(tmp, 1, strlen(tmp)-1); */
-          /* tagid = substr(tmp, 0, strcspn(tmp, ":")); */
-          /* ltsymbol = substr(tmp, strcspn(tmp, ":")+1, strlen(tmp)); */
-          /* Layout layout = symboltolayout(ltsymbol); */
-          /* printf("symbol %s\n", (&layout)->symbol); */
+          tmp = strstr(buffer, ":");
+          tmp = substr(tmp, 1, strlen(tmp)-1);
+          tagid = substr(tmp, 0, strcspn(tmp, ":"));
+          ltsymbol = substr(tmp, strcspn(tmp, ":")+1, strlen(tmp));
+          Layout *layout = symboltolayout(ltsymbol);
+          t.layout = layout;
+          tagArr[((int)*tagid - 48)] = t;
         break;
       default:
         break;
@@ -2133,18 +2141,18 @@ sigterm(int unused)
 	quit(&a);
 }
 
-Layout symboltolayout(char *symbol)
+Layout *symboltolayout(char *symbol)
 {
   int i;
+  Layout *l = &layouts[0];
   for (i = 0; i < LENGTH(layouts); i++) {
-    printf("(&layouts[i])->symbol: %s\n", (&layouts[i])->symbol);
-    printf("symbol: %s\n", symbol);
-    if ((&layouts[i])->symbol == symbol) {
-      return layouts[i];
+    if (strcmp((&layouts[i])->symbol, symbol) == 0) {
+      l = &layouts[i];
+      break;
     }
   }
 
-  return (Layout) { "><>",      NULL };
+  return l;
 }
 
 void
@@ -2633,6 +2641,7 @@ view(const Arg *arg)
 {
 	int i;
 	unsigned int tmptag;
+  Tag t;
 
 	if ((arg->ui & TAGMASK) == selmon->tagset[selmon->seltags])
 		return;
@@ -2665,8 +2674,13 @@ view(const Arg *arg)
   if (selmon->pertag->curtag == 0) {
     selmon->lt[selmon->sellt] = &layouts[4];
   }
+
 	focus(NULL);
 	arrange(selmon);
+  t = tagArr[selmon->pertag->curtag % LENGTH(tags)];
+  Arg a;
+  a.v = t.layout ? t.layout : &layouts[0];
+  setlayout(&a);
 }
 
 Client *
