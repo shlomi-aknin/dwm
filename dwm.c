@@ -2357,7 +2357,6 @@ togglewinview()
     inwinview = 0;
     winview(&a);
   } else {
-    if (gridmode == 0) gridmode = 1;
     inwinview = 1;
     a.ui = ~0;
     view(&a);
