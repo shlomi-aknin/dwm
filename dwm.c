@@ -190,6 +190,7 @@ static int gettextprop(Window w, Atom atom, char *text, unsigned int size);
 static void grabkeys(void);
 static void gridfocus(Arg *arg);
 static void gridortagmovement(Arg *arg);
+static void togglegridmode(void);
 static void incnmaster(const Arg *arg);
 static void keypress(XEvent *e);
 static void killclient(const Arg *arg);
@@ -276,6 +277,7 @@ static char *sessfile = "/tmp/dwm.sess";
 static int screen;
 static int sw, sh;           /* X display screen geometry width, height */
 static int bh, blw = 0;      /* bar geometry */
+static int gridmode = 0;            /* sum of left and right padding for text */
 static int lrpad;            /* sum of left and right padding for text */
 static int (*xerrorxlib)(Display *, XErrorEvent *);
 static unsigned int numlockmask = 0;
@@ -1154,6 +1156,11 @@ gridfocus(Arg *arg) {
 
   focus(c);
   arrange(selmon);
+}
+
+void togglegridmode(void)
+{
+  gridmode = gridmode ? 0 : 1;
 }
 
 void
@@ -2067,6 +2074,10 @@ shiftview(const Arg *arg) {
 void
 shiftviewclients(const Arg *arg)
 {
+  if (gridmode) {
+    movevisual(arg);
+    return;
+  }
 	Arg shifted;
 	Client *c;
 	unsigned int tagmask = 0;
@@ -2346,6 +2357,7 @@ togglewinview()
     inwinview = 0;
     winview(&a);
   } else {
+    if (gridmode == 0) gridmode = 1;
     inwinview = 1;
     a.ui = ~0;
     view(&a);
