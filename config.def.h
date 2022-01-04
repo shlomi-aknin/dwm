@@ -111,6 +111,7 @@ static Key keys[] = {
   { SUPER|SHIFT,                 XK_F1,             spawn,                SHCMD("sudo reboot") },
   { SUPER|SHIFT,                 XK_F2,             spawn,                SHCMD("sudo poweroff") },
   { SUPER|SHIFT,                 XK_c,              spawn,                SHCMD("configselectornvim") },
+  { SUPER|SHIFT,                 XK_e,              spawn,                SHCMD("projectselectorcode") },
   { SUPER|SHIFT,  					     XK_g,              togglegridmode,       {NULL}},
   { SUPER|SHIFT,                 XK_h,              tagtoleft,            {.i = -1 } },
   { SUPER|SHIFT,                 XK_i,              focusmaster,          {0} },
