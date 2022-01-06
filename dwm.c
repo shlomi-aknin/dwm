@@ -1438,29 +1438,27 @@ movevisual(const Arg *arg)
   Client *c = selmon->sel;
   Client *t = NULL;
   int found = 0;
-  if(selmon->lt[selmon->sellt]->arrange != gaplessgrid || !ISVISIBLE(c)) return;
 
   if (arg->i > 0) {
     for(t = selmon->sel->next; t; t = t->next) {
       if (t->gridcol == c->gridcol + 1 && t->gridrow == c->gridrow) break;
     }
   } else {
-    for(t = selmon->clients; t; t = t->next) {
-      if (t->gridcol == c->gridcol - 1 && t->gridrow == c->gridrow) {
+    for(t = selmon->clients; t && t != selmon->sel; t = t->next) {
+      if (t->gridrow == c->gridrow && t->gridcol == c->gridcol - 1) {
         found = 1;
         break;
       }
     }
 
     if (found == 0) {
-      for(t = selmon->clients; t; t = t->next) {
-        if (t->gridcol == c->gridcol - 1 && t->gridrow == c->gridrow - 1) break;
+      for(t = selmon->clients; t && t != c; t = t->next) {
+        if (t->gridrow == c->gridrow - 1 && t->gridcol == c->gridcol - 1) break;
       }
     }
   }
 
   focus(t);
-  arrange(selmon);
 }
 
 Client *
