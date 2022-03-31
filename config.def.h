@@ -83,7 +83,6 @@ static Key keys[] = {
 
   { SUPER,                       XK_Return,         spawn,                {.v = termcmd } },
   { SUPER,                       XK_Tab,            view,                 {0} },
-  { SUPER,                       XK_a,              spawn,                SHCMD("alacritty -e ssh -i ~/Documents/carmeter_aws_keypair_11062017.pem ubuntu@car-meter.com") },
   { SUPER,                       XK_b,              spawn,                SHCMD("google-chrome-stable --enable-features=WebUIDarkMode --force-dark-mode --force-device-scale-factor=1.2") },
   { SUPER,                       XK_c,              spawn,                SHCMD("alacritty -t 'Clock' --class 'ttyclock' -e /usr/local/bin/clock") },
   { SUPER,                       XK_f,              togglefloating,       {NULL} },
@@ -102,7 +101,6 @@ static Key keys[] = {
   { SUPER,                       XK_t,              setlayout,            {.v = &layouts[2]} },
   { SUPER,                       XK_u,              shiftview,            {.i = -1 } },
   { SUPER,                       XK_v,              setlayout,            {.v = &layouts[3]} },
-  { SUPER,                       XK_w,              spawn,                SHCMD("projectselectorcode") },
   { SUPER,                       XK_x,              killclient,           {0} },
   { SUPER,                       XK_z,              spawn,                SHCMD("alacritty -t \"vifm\" -e vifm") },
 
