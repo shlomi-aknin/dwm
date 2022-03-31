@@ -128,6 +128,7 @@ static Key keys[] = {
   { SUPER|SHIFT,                 XK_x,              killall,              {0} },
   { SUPER|SHIFT,                 XK_z,              spawn,                SHCMD("alacritty -e vifm +only $(cat /tmp/lastdir)") },
 
+  { SUPER|CONTROL,					     XK_g,              spawn,	              SHCMD("lazygitselector")},
   { SUPER|CONTROL,					     XK_h,              moveresize,		        {.v = (int []){ -25, 0, 0, 0 }}},
   { SUPER|CONTROL,					     XK_j,              moveresize,		        {.v = (int []){ 0, 25, 0, 0 }}},
   { SUPER|CONTROL,					     XK_k,              moveresize,		        {.v = (int []){ 0, -25, 0, 0 }}},
