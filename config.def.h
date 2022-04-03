@@ -77,6 +77,7 @@ static Key keys[] = {
   { CONTROL|ALT,                 XK_8,              gridfocus,            {.ui = 8 } },
   { CONTROL|ALT,                 XK_9,              gridfocus,            {.ui = 9 } },
   { CONTROL|ALT,                 XK_0,              gridfocus,            {.ui = 10 } },
+  { CONTROL|ALT,                 XK_l,              spawn,                SHCMD("projectselector") },
 
   { CONTROL|SHIFT,               XK_h,              spawn,                SHCMD("dunstctl history-pop") },
   { CONTROL|SHIFT,               XK_i,              spawn,                SHCMD("dunstctl close-all") },
