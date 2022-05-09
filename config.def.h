@@ -86,6 +86,7 @@ static Key keys[] = {
   { SUPER,                       XK_Tab,            view,                 {0} },
   { SUPER,                       XK_b,              spawn,                SHCMD("google-chrome-stable --enable-features=WebUIDarkMode --force-dark-mode --force-device-scale-factor=1.2") },
   { SUPER,                       XK_c,              spawn,                SHCMD("alacritty -t 'Clock' --class 'ttyclock' -e /usr/local/bin/clock") },
+  { SUPER,                       XK_d,              spawn,                SHCMD("alacritty -t 'lazydocker' -e lazydocker") },
   { SUPER,                       XK_f,              togglefloating,       {NULL} },
 	{ SUPER,                       XK_g,              setlayout,            {.v = &layouts[4]} },
   { SUPER,                       XK_h,              gridortagmovement,    {.i = -1 } },
