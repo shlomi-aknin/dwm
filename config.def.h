@@ -104,6 +104,7 @@ static Key keys[] = {
   { SUPER,                       XK_u,              shiftview,            {.i = -1 } },
   { SUPER,                       XK_v,              setlayout,            {.v = &layouts[3]} },
   { SUPER,                       XK_x,              killclient,           {0} },
+  { SUPER,                       XK_s,              spawn,                SHCMD("scrot ~/Downloads/Screenshot_%Y-%m-%d_%H:%M:%S.png") },
   { SUPER,                       XK_z,              spawn,                SHCMD("alacritty -t \"vifm\" -e vifm ~/workspace") },
 
   { SUPER|SHIFT,                 XK_0,              tag,                  {.ui = ~0 } },
